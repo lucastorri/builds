@@ -18,15 +18,20 @@ clean() {
 	rm -f .known-builds/{build-added,build-updated,build-same,build-removed} 
 }
 
-clean
+setup() {
+	clean
+	touch builds/{build-added,build-updated,build-same}
+	touch .known-builds/{build-updated,build-same,build-removed} 
+	md5 -q builds/build-same > .known-builds/build-same
+}
 
-touch builds/{build-added,build-updated,build-same}
-touch .known-builds/{build-updated,build-same,build-removed} 
+teardown() {
+	git checkout master
+	git branch -D "$TEST_BRANCH"
+	clean
+}
 
-md5 -q builds/build-same > .known-builds/build-same
 
+setup
 ./build.sh
-
-git checkout master
-git branch -D "$TEST_BRANCH"
-clean
+teardown
