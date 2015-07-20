@@ -5,6 +5,7 @@ script_dir=`cd $(dirname "$0"); pwd`
 builds_dir=$script_dir/builds
 known_builds_dir=$script_dir/.known-builds
 auto_commit=${BUILDS_AUTO_COMMIT:=false}
+failed=false
 
 ADDED_LABEL="added"
 UPDATED_LABEL="updated"
@@ -12,10 +13,11 @@ REMOVED_LABEL="removed"
 
 
 run() {
-	return
+	/Users/lucastorri/Projects/go/src/github.com/soundcloud/pipeline-generator/ppl-example $1 "$builds_dir/$2"
 }
 
 error() {
+	failed=true
 	echo -e "\033[31m$@\033[0m"
 }
 
@@ -98,4 +100,8 @@ if $auto_commit; then
 	git add .
 	git commit -m "build event on $(date)"
 	git push
+fi
+
+if $failed; then
+	exit 1
 fi
