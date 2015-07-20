@@ -1,4 +1,4 @@
-
+#!/bin/bash
 
 script_dir=`cd $(dirname "$0"); pwd`
 
@@ -48,6 +48,7 @@ add() {
 	$PIPELINE_CMD create $1
 	if [[ "$?" == "0" ]]; then
 		hash "$builds_dir/$1" > "$known_builds_dir/$1"
+		success "$1 successfully added"
 	else
 		error "Could not add $1"
 	fi
@@ -57,6 +58,7 @@ update() {
 	$PIPELINE_CMD update $1
 	if [[ "$?" == "0" ]]; then
 		hash "$builds_dir/$1" > "$known_builds_dir/$1"
+		success "$1 successfully updated"
 	else 
 		error "Could not update $1"
 	fi
@@ -66,6 +68,7 @@ remove() {
 	$PIPELINE_CMD delete $1
 	if [[ "$?" == "0" ]]; then
 		rm "$known_builds_dir/$1"
+		success "$1 successfully removed"
 	else
 		error "Could not remove $1"
 	fi
