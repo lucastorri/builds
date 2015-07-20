@@ -10,8 +10,10 @@ ADDED_LABEL="added"
 UPDATED_LABEL="updated"
 REMOVED_LABEL="removed"
 
-PIPELINE_CMD="echo"
 
+run() {
+	return
+}
 
 error() {
 	echo -e "\033[31m$@\033[0m"
@@ -45,7 +47,7 @@ builds() {
 
 
 add() {
-	$PIPELINE_CMD create $1
+	run create $1
 	if [[ "$?" == "0" ]]; then
 		hash "$builds_dir/$1" > "$known_builds_dir/$1"
 		success "$1 successfully added"
@@ -55,7 +57,7 @@ add() {
 }
 
 update() {
-	$PIPELINE_CMD update $1
+	run update $1
 	if [[ "$?" == "0" ]]; then
 		hash "$builds_dir/$1" > "$known_builds_dir/$1"
 		success "$1 successfully updated"
@@ -65,7 +67,7 @@ update() {
 }
 
 remove() {
-	$PIPELINE_CMD delete $1
+	run delete $1
 	if [[ "$?" == "0" ]]; then
 		rm "$known_builds_dir/$1"
 		success "$1 successfully removed"
