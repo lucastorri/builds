@@ -25,7 +25,7 @@ hash() {
 	md5 -q "$1"
 }
 
-file_changed() {
+changed_files() {
 	while read -r f; do 
 		if [[ `cat "$known_builds_dir/$f"` != `hash "$builds_dir/$f"` ]]; then
 			echo $f
@@ -34,8 +34,8 @@ file_changed() {
 }
 
 builds() {
+	updated_builds=`comm -12 <(ls $builds_dir | sort) <(ls $known_builds_dir | sort) | changed_files | xargs -I BUILD echo "$UPDATED_LABEL:BUILD"`
 	new_builds=`comm -23 <(ls $builds_dir | sort) <(ls $known_builds_dir | sort) | xargs -I BUILD echo "$ADDED_LABEL:BUILD"`
-	updated_builds=`comm -12 <(ls $builds_dir | sort) <(ls $known_builds_dir | sort) | file_changed | xargs -I BUILD echo "$UPDATED_LABEL:BUILD"`
 	removed_builds=`comm -13 <(ls $builds_dir | sort) <(ls $known_builds_dir | sort) | xargs -I BUILD echo "$REMOVED_LABEL:BUILD"`
 
 	echo $new_builds

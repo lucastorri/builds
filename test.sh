@@ -1,15 +1,16 @@
 #!/bin/bash
 
-test_branch="test"
+TEST_BRANCH="test"
+
 
 git checkout master
 
-if [ `git branch --list $test_branch `]; then
-  git branch -D $test_branch
+if [ `git branch --list $TEST_BRANCH `]; then
+  git branch -D $TEST_BRANCH
 fi
 
-git branch $test_branch
-git checkout $test_branch
+git branch $TEST_BRANCH
+git checkout $TEST_BRANCH
 
 rm -f builds/*
 rm -f .known-builds/*
