@@ -18,7 +18,8 @@ run create <(cat << EOM
     "settings": {
         "jenkins-server": "$build_server",
         "default-name": "builds",
-        "git-url": "$git_repo"
+        "git-url": "$git_repo",
+        "job-setup": "export BUILDS_AUTO_COMMIT=true"
     }
 }
 EOM)
