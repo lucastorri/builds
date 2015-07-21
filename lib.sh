@@ -14,7 +14,7 @@ REMOVED_LABEL="removed"
 
 
 run() {
-	"$run_command" "$1" "/$2"
+	"$run_command" "$1" "$2"
 }
 
 error() {
