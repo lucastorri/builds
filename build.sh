@@ -5,7 +5,7 @@ script_dir=`cd $(dirname "$0"); pwd`
 builds_dir=$script_dir/builds
 known_builds_dir=$script_dir/.known-builds
 auto_commit=${BUILDS_AUTO_COMMIT:=false}
-run_command=${BUILDS_RUN_COMMAND:=pipeline}
+run_command=${BUILDS_RUN_COMMAND:=builds}
 failed=false
 
 ADDED_LABEL="added"
