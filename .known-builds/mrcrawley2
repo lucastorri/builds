@@ -1,0 +1,22 @@
+{
+    "stages": [
+        {
+            "name": "test",
+            "jobs": [
+                { "test": "./sbt test" }
+            ],
+            "next-stages": [ "build" ]
+        },
+        {
+            "name": "build",
+            "jobs": [
+                { "build": "./sbt 'project service' compile" }
+            ]
+        }
+    ],
+    "settings": {
+        "jenkins-server": "http://localhost:8080",
+        "default-name": "mrcrawley2",
+        "git-url": "ssh://snc@source-europe.it.here.com/soda/git/mrcrawley2"
+    }
+}
