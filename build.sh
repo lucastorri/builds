@@ -5,6 +5,7 @@ script_dir=`cd $(dirname "$0"); pwd`
 builds_dir=$script_dir/builds
 known_builds_dir=$script_dir/.known-builds
 auto_commit=${BUILDS_AUTO_COMMIT:=false}
+run_command=${BUILDS_RUN_COMMAND:=pipeline}
 failed=false
 
 ADDED_LABEL="added"
@@ -13,7 +14,7 @@ REMOVED_LABEL="removed"
 
 
 run() {
-	/Users/lucastorri/Projects/go/src/github.com/soundcloud/pipeline-generator/ppl-example $1 "$builds_dir/$2"
+	"$run_command" "$1" "/$2"
 }
 
 error() {
@@ -31,7 +32,7 @@ hash() {
 
 changed_files() {
 	while read -r f; do 
-		if [[ `cat "$known_builds_dir/$f"` != `hash "$builds_dir/$f"` ]]; then
+		if [[ `hash "$known_builds_dir/$f"` != `hash "$builds_dir/$f"` ]]; then
 			echo $f
 		fi
 	done
@@ -49,9 +50,9 @@ builds() {
 
 
 add() {
-	run create $1
+	run create "$builds_dir/$1"
 	if [[ "$?" == "0" ]]; then
-		hash "$builds_dir/$1" > "$known_builds_dir/$1"
+		cp "$builds_dir/$1" "$known_builds_dir/$1"
 		success "$1 successfully added"
 	else
 		error "Could not add $1"
@@ -59,9 +60,9 @@ add() {
 }
 
 update() {
-	run update $1
+	run update "$builds_dir/$1"
 	if [[ "$?" == "0" ]]; then
-		hash "$builds_dir/$1" > "$known_builds_dir/$1"
+		cp "$builds_dir/$1" "$known_builds_dir/$1"
 		success "$1 successfully updated"
 	else 
 		error "Could not update $1"
@@ -69,7 +70,7 @@ update() {
 }
 
 remove() {
-	run delete $1
+	run delete "$known_builds_dir/$1"
 	if [[ "$?" == "0" ]]; then
 		rm "$known_builds_dir/$1"
 		success "$1 successfully removed"
