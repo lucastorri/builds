@@ -6,7 +6,7 @@ builds_dir=$script_dir/all-builds
 known_builds_dir=$script_dir/.known-builds
 auto_commit=${BUILDS_AUTO_COMMIT:=false}
 run_command=${BUILDS_RUN_COMMAND:=builds}
-failed=false
+build_server=${BUILDS_JENKINS_SERVER:=http://localhost:8080}
 
 ADDED_LABEL="added"
 UPDATED_LABEL="updated"

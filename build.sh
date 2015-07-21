@@ -1,6 +1,8 @@
 #!/bin/bash
 
-script_dir="$(source `dirname "$0"`)/lib.sh"
+source "$(dirname "$0")/lib.sh"
+
+failed=false
 
 
 for entry in `builds`; do
