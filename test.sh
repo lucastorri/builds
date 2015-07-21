@@ -14,15 +14,15 @@ git branch $TEST_BRANCH
 git checkout $TEST_BRANCH
 
 clean() {
-	rm -f builds/{build-added,build-updated,build-same}
+	rm -f all-builds/{build-added,build-updated,build-same}
 	rm -f .known-builds/{build-added,build-updated,build-same,build-removed} 
 }
 
 setup() {
 	clean
-	touch builds/{build-added,build-updated,build-same}
+	touch all-builds/{build-added,build-updated,build-same}
 	touch .known-builds/{build-updated,build-same,build-removed} 
-	md5 -q builds/build-same > .known-builds/build-same
+	echo a > all-builds/build-updated
 }
 
 teardown() {
@@ -35,3 +35,4 @@ teardown() {
 setup
 ./build.sh
 teardown
+
